@@ -5,7 +5,7 @@ import * as BooksAPI from '../API/BooksAPI'
 
 class Bookshelf extends Component {
 
-    onUpdate = () => {
+    onUpdate() {
         // Let the BookPage know something changed
     }
 

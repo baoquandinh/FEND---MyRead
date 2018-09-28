@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 class Book extends Component {
 
-    updateBook = (book, event) => {
+    updateBook(book, event) {
         // Update Book
         // Let BookShelf know the book was updated on compelete
     }
