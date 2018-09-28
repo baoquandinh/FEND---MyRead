@@ -10,12 +10,14 @@ class Bookshelf extends Component {
 
 
     updateShelf = (book, event) => {
-        // BooksAPI.get(book.id).then(this.setState({shelf: book.shelf}))
-        BooksAPI.update(book, event.target.value).then(
-            this.setState ( () => ({
-                shelf: event.target.value
-            }))
-        )
+        BooksAPI.get(book.id).then(this.setState({shelf: book.shelf}))
+        BooksAPI.update(book, event.target.value)
+        // .then(
+        //     this.setState ( () => ({
+        //         shelf: event.target.value
+        //     }))
+        // )
+        console.log(`This was the previous shelf: ${this.state.shelf}`)
     }
 
     render() {

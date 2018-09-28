@@ -11,12 +11,6 @@ class ListBooks extends Component {
     value: ''
   }
 
-  // updateShelf = (event, book) => {
-  //   console.log(book)
-  //   console.log(`${book.title} current shelf is ${book.shelf}, we are now moving it to ${event.target.value}`)
-  //   BooksAPI.update(book, event.target.value)    
-  // }
-
    render() {
        return (
         <div className="list-books">
