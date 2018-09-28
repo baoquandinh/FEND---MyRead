@@ -2,6 +2,7 @@ import React, {Component } from 'react'
 import Bookshelf from './Bookshelf'
 import * as BooksAPI from '../API/BooksAPI'
 import { Link } from 'react-router-dom'
+import BooksApp from '../App';
 
 class ListBooks extends Component {
 
@@ -9,17 +10,19 @@ class ListBooks extends Component {
     books: [],
     shelfName: '',
     shelfType: '',
-    value: ''
+    shelf: []
+    // value: ''
   }
 
-  // componentDidMount() {
-  //   BooksAPI.getAll().then((books) => {
-  //     this.setState({books})
-  //   })
-  //   console.log(this.state.books)
-  // }
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books})
+    })
+    console.log("Component did mount ran")
+  }
 
    render() {
+     console.log(this.state.shelf)
        return (
         <div className="list-books">
         <div className="list-books-title">
@@ -28,19 +31,24 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
             <Bookshelf 
-            books={this.props.books}
+            books={this.state.books}
             shelfType={'currentlyReading'}
             shelfName={'Currently reading'}
+            // onUpdateShelf={this.updateShelf}
             />
             <Bookshelf 
-            books={this.props.books}
+            books={this.state.books}
             shelfType={'wantToRead'}
             shelfName={'Want to read'}
+            // onUpdateShelf={this.updateShelf}
+
             />
             <Bookshelf 
-            books={this.props.books}
+            books={this.state.books}
             shelfType={'read'}
             shelfName={'Read'}
+            // onUpdateShelf={this.updateShelf}
+
             />
           </div>
         </div>
