@@ -1,39 +1,30 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Book from './Book'
 import * as BooksAPI from '../API/BooksAPI'
 
 
 class Bookshelf extends Component {
-    state = {
-        shelf: []
-    }
 
-
-    updateShelf = (book, event) => {
-        // BooksAPI.get(book.id).then(this.setState({shelf: book.shelf}))
-        BooksAPI.update(book, event.target.value).then(
-            this.setState ( () => ({
-                shelf: event.target.value
-            }))
-        )
+    onUpdate = () => {
+        // Let the BookPage know something changed
     }
 
     render() {
-        return(
+        return (
             <div className="bookshelf">
-                  <h2 className="bookshelf-title">{this.props.shelfName}</h2>
-                  <div className="bookshelf-books">
+                <h2 className="bookshelf-title">{this.props.shelfName}</h2>
+                <div className="bookshelf-books">
                     <ol className="books-grid">
-                    <Book 
-                      books={this.props.books}
-                      shelfName={this.props.shelfName}
-                      shelfType={this.props.shelfType}
-                      shelf={this.state.shelf}  
-                      onUpdateShelf = { (book, event) => {this.updateShelf(book, event)}}
-                      />
+                        <Book
+                            books={this.props.books}
+                            shelfName={this.props.shelfName}
+                            shelfType={this.props.shelfType}
+                            shelf={this.state.shelf}
+                            onUpdate={this.onUpdate}
+                        />
                     </ol>
-                  </div>
                 </div>
+            </div>
         )
     }
 }
