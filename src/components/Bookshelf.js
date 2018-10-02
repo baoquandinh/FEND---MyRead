@@ -1,62 +1,61 @@
-import React, {Component} from 'react'
+import React, {Component } from 'react'
+import Shelf from './Shelf'
 import * as BooksAPI from '../API/BooksAPI'
-
+import { Link } from 'react-router-dom'
 
 class Bookshelf extends Component {
-    state = {
-        shelf: []
-    }
 
-    updateShelf = (book, event) => {
-        let newShelf = event.target.value
-        BooksAPI.update(book, newShelf).then(() => {
-            this.setState({shelf: newShelf})
-          })
-    }
+  state = {
+    books: [],
+  }
 
-    render() {
-        const {books, shelfType, onUpdateShelf} = this.props
-        // console.log(this.props.books)
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books: books})
+    })
+    console.log("Component didMount ran")
+  }
 
-        return(
-            <div className="bookshelf">
-                  <h2 className="bookshelf-title">{this.props.shelfName}</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                    {/* {console.log(books)} */}
-                    {/* {console.log(this.state.books)} */}
-                    {
-                        books.filter((book) => book.shelf === shelfType).map((book) => 
-                        <li key={book.id}>
-                        <div className="book-top">
-                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
-                                    <div className="book-shelf-changer">
-                                        <select value={shelfType} onChange={(event) => this.updateShelf(book, event)}>
-                                            <option value="move" disabled>Move to...</option>
-                                            <option value="currentlyReading">Currently Reading</option>
-                                            <option value="wantToRead" >Want to Read</option>
-                                            <option value="read" >Read</option>
-                                            <option value="none">None</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="book-title">{book.title}</div>
-                            <div className="book-authors">{book.authors[0]}</div>
-                        </li>)
-                    }
-                    {/* <Book 
-                      books={this.props.books}
-                      shelfName={this.props.shelfName}
-                      shelfType={this.props.shelfType}
-                      shelf={this.state.shelf}  
-                      onUpdateShelf = { (book, event) => {this.updateShelf(book, event)}}
-                      /> */}
-                    </ol>
-                  </div>
-                </div>
-        )
-    }
+  updateShelves = (book, event) => {
+    console.log(`${book.title} is being moved to ${event.target.value}`)
+    console.log(this.state.books)
+  }
+
+   render() {
+     console.log(this.state.books) // Should be empty as expected
+       return (
+        <div className="list-books">
+        <div className="list-books-title">
+          <h1>MyReads</h1>
+        </div>
+        <div className="list-books-content">
+          <div>
+            <Shelf 
+            books={this.state.books}
+            shelfType={'currentlyReading'}
+            shelfName={'Currently reading'}
+            onUpdate={this.updateShelves}
+            />
+            <Shelf 
+            books={this.state.books}
+            shelfType={'wantToRead'}
+            shelfName={'Want to read'}
+            onUpdate={this.updateShelves}
+            />
+            <Shelf 
+            books={this.state.books}
+            shelfType={'read'}
+            shelfName={'Read'}
+            onUpdate={this.updateShelves}
+            />
+          </div>
+        </div>
+        <div className="open-search">
+            <Link to='/search'/>
+        </div>
+      </div>
+       )
+   }
 }
 
 export default Bookshelf
