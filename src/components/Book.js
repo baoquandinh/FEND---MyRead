@@ -1,17 +1,26 @@
 import React, { Component } from 'react'
-// import Bookshelf from './Bookshelf'
+import * as BooksAPI from '../API/BooksAPI'
 
 class Book extends Component {
 
     updateBook(book, event) {
-        // Update Book
-        // Let BookShelf know the book was updated on compelete
+        // TODO: Get shelf from event
+        const shelf = event.target.value
+        // TODO: Update Book
+        BooksAPI.update(book, shelf).then((book) => {
+            // TODO: Let BookShelf know the book was updated
+            console.log("Calling onUpdate()")
+            console.log(book)
+            
+            this.props.onUpdate()
+           
+        });
     }
 
     render() {
         const { book } = this.props
         return (
-            <li key={book.id}>
+            <li className="book">
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}>
                         <div className="book-shelf-changer">
@@ -26,7 +35,7 @@ class Book extends Component {
                     </div>
                 </div>
                 <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors[0]}</div>
+                {(book.authors || []).map((author) => <div key={author} className="book-authors">{author}</div>)}
             </li>)
 
     }

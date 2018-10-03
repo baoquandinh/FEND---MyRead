@@ -1,23 +1,30 @@
 import React, { Component } from 'react'
-import Bookshelf from './Bookshelf'
+import Bookshelf from '../components/Bookshelf'
+import * as BooksAPI from '../API/BooksAPI'
 import { Link } from 'react-router-dom'
 
 class BookPage extends Component {
-
     state = {
         books: []
     }
 
     componentWillMount() {
         this.getAllBooks()
+        console.log(this.state.books)
     }
 
     getAllBooks() {
         // Get all the books from api and set state
+        BooksAPI.getAll().then((books) => {
+            this.setState({books: books});
+        });
+        
     }
 
     onBookChange() {
         // Reget all books since your storage system is cloud only.
+        this.getAllBooks()
+        console.log("Something changed")
     }
 
     render() {
@@ -32,19 +39,19 @@ class BookPage extends Component {
                             books={this.state.books}
                             shelfType={'currentlyReading'}
                             shelfName={'Currently reading'}
-                            onChange={this.onBookChange}
+                            onChange={this.onBookChange.bind(this)}
                         />
                         <Bookshelf
                             books={this.state.books}
                             shelfType={'wantToRead'}
                             shelfName={'Want to read'}
-                            onChange={this.onBookChange}
+                            onChange={this.onBookChange.bind(this)}
                         />
                         <Bookshelf
                             books={this.state.books}
                             shelfType={'read'}
                             shelfName={'Read'}
-                            onChange={this.onBookChange}
+                            onChange={this.onBookChange.bind(this)}
                         />
                     </div>
                 </div>
