@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Book from './Book'
+import * as BooksAPI from '../API/BooksAPI'
 
 
 class Bookshelf extends Component {
