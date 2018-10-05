@@ -13,11 +13,11 @@ class SearchBooks extends Component {
         this.setState({query: query })
         if (query !== '') {
             BooksAPI.search(query).then((query) => {
-                console.log(query)
+
 
             })         
         } else {
-            console.log("There is nothing to search")
+
         }
     }
 

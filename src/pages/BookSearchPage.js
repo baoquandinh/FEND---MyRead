@@ -9,39 +9,27 @@ class BookSearchPage extends Component {
         books: []
     }
 
-    componentWillMount = () => {
-        console.log(this.state.books)
-    }
-
-    updateQuery = (query) => {
+    updateQuery = (event) => {
+        let query = event.target.value
         this.setState({query: query})
-        console.log("NICK", query)
+
         if (query !== '') {
             BooksAPI.search(query).then((books) => {
                 if(books.error !== undefined) {
-                    console.log(books)
+
                     this.setState({books: []})
                 } else {
                     this.setState({books: books})
                 }
-                console.log(books)
-            }).catch(err => {
-                console.log(err)
             })
         } else {
             this.setState({books: []})
-            console.log("There is nothing to search")
-        }
-    }
 
-    clearQuery = () => {
-        this.setState({query: ''})
+        }
     }
 
     render() {
         const {books} = this.state
-
-
         return (
             <div className="search-books">
             <div className="search-books-bar">
@@ -51,7 +39,7 @@ class BookSearchPage extends Component {
                         type="text" 
                         placeholder="Search by title or author"
                         value={this.state.query}
-                        onChange={(event) => this.updateQuery(event.target.value)}
+                        onChange={this.updateQuery}
                         />
                 </div>
             </div>
@@ -60,9 +48,8 @@ class BookSearchPage extends Component {
                 <ol className="books-grid">
                 {books.map((book) => {
                     let myBooks = this.props.myBooks;
-                    let myMatchingBook = myBooks.find(b => b.id == book.id)
+                    let myMatchingBook = myBooks.find(b => b.id === book.id)
                     if (myMatchingBook) {
-                        console.log("Replacing with My Book:", myMatchingBook)
                         book = myMatchingBook
                     }
                     return  <Book key={book.id} book={book} onUpdate={() => {

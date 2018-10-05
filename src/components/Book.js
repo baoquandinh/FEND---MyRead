@@ -2,13 +2,10 @@ import React, { Component } from 'react'
 import * as BooksAPI from '../API/BooksAPI'
 
 class Book extends Component {
-
     updateBook(book, event) {
-        // TODO: Get shelf from event
         const newShelf = event.target.value
         // TODO: Update Book
         BooksAPI.update(book, newShelf).then((book) => {
-            // TODO: Let BookShelf know the book was updated
             this.props.onUpdate(newShelf)
         });
     }
@@ -42,5 +39,3 @@ class Book extends Component {
 }
 
 export default Book
-
-// onChange={(event) => { this.updateShelf(book, event) }

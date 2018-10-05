@@ -22,15 +22,15 @@ getAllBooks() {
     
 }
 
-onUpdate() {
+onUpdate = () => {
   this.getAllBooks()
 }
 
   render() {
     return (
       <div className="app">
-      <Route exact path='/' render={ () => <BookPage myBooks={this.state.myBooks} onUpdate={this.onUpdate.bind(this)}/>}/>
-      <Route path='/search' render={() => <BookSearchPage myBooks={this.state.myBooks} onUpdate={this.onUpdate.bind(this)}/>}/>
+      <Route exact path='/' render={ () => <BookPage myBooks={this.state.myBooks} onUpdate={this.onUpdate}/>}/>
+      <Route path='/search' render={() => <BookSearchPage myBooks={this.state.myBooks} onUpdate={this.onUpdate}/>}/>
       </div>
     )
   }
