@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import Book from '../components/Book'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from '../API/BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
 
 class BookSearchPage extends Component {
     state = {
@@ -20,9 +18,15 @@ class BookSearchPage extends Component {
         console.log("NICK", query)
         if (query !== '') {
             BooksAPI.search(query).then((books) => {
-                this.setState({books: books || []})
+                if(books.error !== undefined) {
+                    console.log(books)
+                    this.setState({books: []})
+                } else {
+                    this.setState({books: books})
+                }
+                console.log(books)
             }).catch(err => {
-                console.error(err)
+                console.log(err)
             })
         } else {
             this.setState({books: []})
@@ -36,6 +40,7 @@ class BookSearchPage extends Component {
 
     render() {
         const {books} = this.state
+
 
         return (
             <div className="search-books">
@@ -53,7 +58,17 @@ class BookSearchPage extends Component {
 
             <div className="search-books-results">
                 <ol className="books-grid">
-                {(books | []).map((book) => <Book key={book.id} book={book} />)}
+                {books.map((book) => {
+                    let myBooks = this.props.myBooks;
+                    let myMatchingBook = myBooks.find(b => b.id == book.id)
+                    if (myMatchingBook) {
+                        console.log("Replacing with My Book:", myMatchingBook)
+                        book = myMatchingBook
+                    }
+                    return  <Book key={book.id} book={book} onUpdate={() => {
+                        this.props.onUpdate()
+                    }}/>
+                })} 
                 </ol>
             </div>
         </div>

@@ -37,29 +37,29 @@ class Bookshelf extends Component {
 
     // A function that takes in a book and returns a boolean
     // describing whether it belongs to this shelf component.
-    belongsToShelf(book) { 
-        // some magic algorithm to decide to if book should be on shelf
-        // if (book.shelf === this.props.shelfType) {
-        //   return true
-        // } else {
-        //   return false
-        // }
-        return book.shelf === this.props.shelfType
-    }
+    // belongsToShelf(book) { 
+    //     // some magic algorithm to decide to if book should be on shelf
+    //     // if (book.shelf === this.props.shelfType) {
+    //     //   return true
+    //     // } else {
+    //     //   return false
+    //     // }
+    //     return book.shelf === this.props.shelfType
+    // }
 
     // A function that takes in a book and return a html element/component
-    bookToElement(book) {
-        //TODO: some magic to turn a book into a html element.
-        return <Book 
-          book={book}
-          shelfType={this.props.shelfType}
-        />
-    }
+    // bookToElement(book) {
+    //     //TODO: some magic to turn a book into a html element.
+    //     return <Book 
+    //       book={book}
+    //       shelfType={this.props.shelfType}
+    //     />
+    // }
 
     onUpdate() {
         //TODO: Let the BookPage know something changed
         console.log("Calling onChange()")
-        this.props.onChange()
+        this.props.onUpdate()
     }
 
     render() {
@@ -74,7 +74,8 @@ class Bookshelf extends Component {
                         return <Book key={book.id} 
                                     book={book} 
                                     shelfType={this.props.shelfType} 
-                                    onUpdate={() => this.props.onChange()}/>
+                                    onUpdate={this.onUpdate.bind(this)}
+                                />
                       })
                         //Equivalant
                         // this.props.books.filter((book) => { return book.shelf === this.props.shelfType; })

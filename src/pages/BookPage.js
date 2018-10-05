@@ -4,27 +4,16 @@ import * as BooksAPI from '../API/BooksAPI'
 import { Link } from 'react-router-dom'
 
 class BookPage extends Component {
-    state = {
-        books: []
-    }
+    // state = {
+    //     books: []
+    // }
 
-    componentWillMount() {
-        this.getAllBooks()
-        console.log(this.state.books)
-    }
-
-    getAllBooks() {
-        // Get all the books from api and set state
-        BooksAPI.getAll().then((books) => {
-            this.setState({books: books});
-        });
-        
-    }
-
-    onBookChange() {
-        // Reget all books since your storage system is cloud only.
-        this.getAllBooks()
-        console.log("Something changed")
+    onUpdate() {
+    //     // Reget all books since your storage system is cloud only.
+    //     this.getAllBooks()
+    //     console.log("Something changed")
+    //     console.log(this.state.books)
+        this.props.onUpdate()
     }
 
     render() {
@@ -36,22 +25,22 @@ class BookPage extends Component {
                 <div className="list-books-content">
                     <div>
                         <Bookshelf
-                            books={this.state.books}
+                            books={this.props.myBooks}
                             shelfType={'currentlyReading'}
                             shelfName={'Currently reading'}
-                            onChange={this.onBookChange.bind(this)}
+                            onUpdate={this.onUpdate.bind(this)}
                         />
                         <Bookshelf
-                            books={this.state.books}
+                            books={this.props.myBooks}
                             shelfType={'wantToRead'}
                             shelfName={'Want to read'}
-                            onChange={this.onBookChange.bind(this)}
+                            onUpdate={this.onUpdate.bind(this)}
                         />
                         <Bookshelf
-                            books={this.state.books}
+                            books={this.props.myBooks}
                             shelfType={'read'}
                             shelfName={'Read'}
-                            onChange={this.onBookChange.bind(this)}
+                            onUpdate={this.onUpdate.bind(this)}
                         />
                     </div>
                 </div>
