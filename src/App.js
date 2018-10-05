@@ -1,37 +1,36 @@
 import React from 'react'
 import * as BooksAPI from './API/BooksAPI'
-import ListBooks from './components/ListBooks'
-import SearchBooks from './components/SearchBooks'
+import BookPage from './pages/BookPage'
+import BookSearchPage from './pages/BookSearchPage'
 import { Route } from 'react-router-dom'
 import './css/App.css'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    myBooks: []
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    this.getAllBooks()
+}
+
+getAllBooks() {
+    // Get all the books from api and set state
     BooksAPI.getAll().then((books) => {
-      this.setState({books})
-    })
-    console.log(this.state.books)
-  }
+        this.setState({myBooks: books});
+    });
+    
+}
+
+onUpdate = () => {
+  this.getAllBooks()
+}
 
   render() {
     return (
       <div className="app">
-      <Route exact path='/' render={() => (
-        <ListBooks books={this.state.books}/>
-      )}/>
-      
-      <Route path='/search' render={({history}) => (
-        <SearchBooks
-        // books={this.state.books}
-        // onSearchBook={(book) => {
-        //   history.push('/')
-        // }}
-        />
-      )}/>
+      <Route exact path='/' render={ () => <BookPage myBooks={this.state.myBooks} onUpdate={this.onUpdate}/>}/>
+      <Route path='/search' render={() => <BookSearchPage myBooks={this.state.myBooks} onUpdate={this.onUpdate}/>}/>
       </div>
     )
   }

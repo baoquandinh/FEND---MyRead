@@ -1,14 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Book from './Book'
-import * as BooksAPI from '../API/BooksAPI'
 
 
 class Bookshelf extends Component {
-    state = {
-        shelf: []
-    }
 
-
+<<<<<<< HEAD
     updateShelf = (book, event) => {
         BooksAPI.get(book.id).then(this.setState({shelf: book.shelf}))
         BooksAPI.update(book, event.target.value)
@@ -18,24 +14,29 @@ class Bookshelf extends Component {
         //     }))
         // )
         console.log(`This was the previous shelf: ${this.state.shelf}`)
+=======
+    onUpdate = () => {
+        this.props.onUpdate()
+>>>>>>> origin/clean
     }
 
     render() {
-        return(
+        return (
             <div className="bookshelf">
-                  <h2 className="bookshelf-title">{this.props.shelfName}</h2>
-                  <div className="bookshelf-books">
+                <h2 className="bookshelf-title">{this.props.shelfName}</h2>
+                <div className="bookshelf-books">
                     <ol className="books-grid">
-                    <Book 
-                      books={this.props.books}
-                      shelfName={this.props.shelfName}
-                      shelfType={this.props.shelfType}
-                      shelf={this.state.shelf}  
-                      onUpdateShelf = { (book, event) => {this.updateShelf(book, event)}}
-                      />
+                    {
+                      this.props.books.filter((book) => book.shelf === this.props.shelfType).map((book) => {
+                        return <Book key={book.id} 
+                                    book={book} 
+                                    shelfType={this.props.shelfType} 
+                                    onUpdate={this.onUpdate}
+                                />})
+                    }
                     </ol>
-                  </div>
                 </div>
+            </div>
         )
     }
 }
